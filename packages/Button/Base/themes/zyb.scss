@@ -1,0 +1,37 @@
+button.zyb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #3E86F7;
+  border: 1Px solid #3E86F7;
+  border-radius: 8px;
+  margin: 0 auto;
+
+  &:disabled {
+    opacity: 0.4;
+  }
+
+  &.primary {
+    background: #3E86F7;
+    color: #fff;
+  }
+
+  &.l {
+    width: 690px;
+    height: 88px;
+    font-size: 36px;
+  }
+
+  &.m {
+    width: 360px;
+    height: 64px;
+    font-size: 32px;
+  }
+
+  &.s {
+    width: 144px;
+    height: 56px;
+    font-size: 28px;
+  }
+}
