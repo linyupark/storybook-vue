@@ -8,13 +8,21 @@
     :disabled="loading.value"
     :class="{ [theme]: true, [size]: true, [type]: true }"
   >
-    <i v-show="loading.value">loading</i>
-    <!-- @slot 按钮内容 -->
-    <slot /></button>
+    <span v-show="loading.value">
+      <!-- @slot 加载状态展示内容 -->
+      <slot name="loading"></slot>
+    </span>
+    
+    <span v-show="showText">
+      <!-- @slot 按钮内容 -->
+      <slot />
+    </span>
+  </button>
 </template>
 
 <script>
-  import useBoolean from "@/Mixins/useBoolean";
+  import useBoolean from "@crh/Vue/Mixins/useBoolean";
+
   export default {
     name: "ButtonBase",
     props: {
@@ -32,12 +40,23 @@
       type: {
         type: "" | "primary" | "warn" | "error",
         default: ""
+      },
+      /** 加载时候只显示加载状态 */
+      hideText: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
       return {
-        loading: {},
+        loading: useBoolean("loading", false)
       };
+    },
+    computed: {
+      /** 是否能显示按钮内容 */
+      showText() {
+        return this.hideText === false || this.loading.value === false;
+      }
     },
     methods: {
       onClick() {
@@ -53,7 +72,6 @@
     },
     async created() {
       await import(`./themes/${this.theme}.scss`);
-      this.loading = useBoolean("loading", false);
     },
     mounted() {}
   };

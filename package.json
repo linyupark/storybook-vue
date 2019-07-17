@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "storybook": "start-storybook -p 3000 -h 0.0.0.0",
+    "storybook": "start-storybook -p 6006 -h 0.0.0.0",
     "build-storybook": "build-storybook"
   },
   "author": "linyupark@gmail.com",

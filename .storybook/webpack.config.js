@@ -29,12 +29,12 @@ module.exports = async ({ config, mode }) => {
         loader: 'postcss-loader'
       },
       {
-        loader: 'sass-loader'
-        // options: {
-        //   data: `
-        //     @import "~@/Themes/var.scss";
-        //   `
-        // }
+        loader: 'sass-loader',
+        options: {
+          data: `
+            @import "~@/Sass/var.scss";
+          `
+        }
       }
     ]
   });
@@ -43,7 +43,7 @@ module.exports = async ({ config, mode }) => {
   config.resolve.alias = {
     ...config.resolve.alias,
     '@': path.resolve(__dirname, '../packages'),
-    '~': path.resolve(__dirname, '../packages')
+    '@crh/Vue': path.resolve(__dirname, '../packages'),
   };
 
   /** vue 文件内容解析 */
