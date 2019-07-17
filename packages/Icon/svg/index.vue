@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-  @import "@crh/Vue/Sass/animation.scss";
+  @import "@crh/vue/sass/animation.scss";
   .icon-wrapper {
     width: 1em;
     height: 1em;
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-  import useScriptLoader from "@crh/Vue/Mixins/useScriptLoader";
+  import useScriptLoader from "@crh/vue/mixins/useScriptLoader";
   export default {
     name: "IconSvg",
     components: {},

@@ -1,0 +1,17 @@
+{
+  "name": "@crh/vue",
+  "version": "1.0.0",
+  "description": "vue 公共组件 mjs版本(未编译)",
+  "scripts": {
+    "publish-scope": "npm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.cairenhui.com/linyu/vue-h5-storybook.git"
+  },
+  "keywords": [
+    "vue"
+  ],
+  "author": "linyupark@gmail.com",
+  "license": "ISC"
+}

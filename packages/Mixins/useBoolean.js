@@ -1,5 +1,4 @@
-export default function(stateName, initValue = false) {
-  if (!stateName) throw new Error('stateName 不能为空');
+export default function(initValue = false) {
   return {
     value: initValue,
     set(newValue) {

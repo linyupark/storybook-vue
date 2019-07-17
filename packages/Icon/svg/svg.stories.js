@@ -38,14 +38,36 @@ storiesOf('ELEMENT|Icon', module).add(
     methods: {
     },
     template: `
-      <IconSvg
-        :size="size" 
-        :cdn="cdn" 
-        :icon="icon" 
-        :color="color" 
-        :rotate="rotate"
-      >
-      </IconSvg>
+      <div>
+        <h4>Svg 图标</h4>
+        <div class="flexcc">
+          <IconSvg
+            :size="size" 
+            :cdn="cdn" 
+            :icon="icon" 
+            :color="color" 
+            :rotate="rotate"
+          />
+          <IconSvg
+            :size="size" 
+            icon="icon-jinru" 
+            color="#666" 
+          />
+          <IconSvg
+            :size="size" 
+            icon="icon-duanxin" 
+            color="#666" 
+          />
+          <IconSvg
+            :size="size" 
+            icon="icon-cuowu"
+          />
+          <IconSvg
+            :size="size" 
+            icon="icon-chenggong"
+          />
+        </div>
+      </div>
     `
   }),
   {

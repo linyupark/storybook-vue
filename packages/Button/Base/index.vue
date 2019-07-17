@@ -5,14 +5,14 @@
 <template>
   <button
     @click="onClick"
-    :disabled="loading.value"
+    :disabled="loadingState.value || disabled"
     :class="{ [theme]: true, [size]: true, [type]: true }"
   >
-    <span v-show="loading.value">
+    <span v-show="loadingState.value">
       <!-- @slot 加载状态展示内容 -->
       <slot name="loading"></slot>
     </span>
-    
+
     <span v-show="showText">
       <!-- @slot 按钮内容 -->
       <slot />
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import useBoolean from "@crh/Vue/Mixins/useBoolean";
+  import useBoolean from "@crh/vue/mixins/useBoolean";
 
   export default {
     name: "ButtonBase",
@@ -45,33 +45,44 @@
       hideText: {
         type: Boolean,
         default: false
+      },
+      /** 按钮失效状态 */
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+      /** 设置按钮载入状态 */
+      loading: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
       return {
-        loading: useBoolean("loading", false)
+        loadingState: useBoolean(false)
       };
     },
     computed: {
       /** 是否能显示按钮内容 */
       showText() {
-        return this.hideText === false || this.loading.value === false;
+        return this.hideText === false || this.loadingState.value === false;
       }
     },
     methods: {
       onClick() {
-        this.loading.set(true);
+        this.loadingState.set(true);
         /**
          * 转发点击事件
          * @type {Event} 处理点击
          */
         this.$emit("click", () => {
-          this.loading.set(false);
+          this.loadingState.set(false);
         });
-      }
+      },
     },
     async created() {
       await import(`./themes/${this.theme}.scss`);
+      this.loadingState.set(this.loading);
     },
     mounted() {}
   };

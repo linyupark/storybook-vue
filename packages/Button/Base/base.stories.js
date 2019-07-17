@@ -1,7 +1,7 @@
 import { storiesOf } from '@storybook/vue';
 import { text, select, boolean } from '@storybook/addon-knobs';
 import ButtonBase from './index';
-import IconSvg from '@crh/Vue/Icon/svg';
+import IconSvg from '@crh/vue/icon/svg';
 
 storiesOf('ELEMENT|Button', module).add(
   'Base',
@@ -59,19 +59,28 @@ storiesOf('ELEMENT|Button', module).add(
           <span slot="loading" v-html="loading"></span>
           {{text}}
         </ButtonBase>
+        
         <h4>加载带动画icon</h4>
         <ButtonBase
           size="m"
-          @click="onSubmit($event, '按钮2')"
+          @click="onSubmit($event, '按钮3')"
         >
           <IconSvg 
             slot="loading" cdn="//at.alicdn.com/t/font_1001796_k890pb7yti.js" 
             icon="icon-shuaxin"
             color="#3E86F7"
             :rotate="1"
-          />
-          &nbsp;
-          {{text}}
+          />&nbsp;{{text}}
+        </ButtonBase>
+
+        <h4>默认开启loading</h4>
+        <ButtonBase
+          type="primary"
+          size="s"
+          loading
+          @click="onSubmit($event, '按钮3')"
+        >
+          <span slot="loading">loading...</span>
         </ButtonBase>
       </div>
     `

@@ -32,7 +32,7 @@ module.exports = async ({ config, mode }) => {
         loader: 'sass-loader',
         options: {
           data: `
-            @import "~@/Sass/var.scss";
+            @import "~@crh/vue/sass/var.scss";
           `
         }
       }
@@ -43,7 +43,7 @@ module.exports = async ({ config, mode }) => {
   config.resolve.alias = {
     ...config.resolve.alias,
     '@': path.resolve(__dirname, '../packages'),
-    '@crh/Vue': path.resolve(__dirname, '../packages'),
+    '@crh/vue': path.resolve(__dirname, '../packages'),
   };
 
   /** vue 文件内容解析 */
