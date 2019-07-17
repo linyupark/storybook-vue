@@ -1,6 +1,6 @@
 {
   "name": "@crh/vue",
-  "version": "1.0.0",
+  "version": "0.0.2-debug",
   "description": "vue 公共组件 mjs版本(未编译)",
   "scripts": {
     "publish-scope": "npm publish --access public"
