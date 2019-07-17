@@ -14,6 +14,19 @@ button.zyb {
 
   &.primary {
     background: #3E86F7;
+    border-color: darken(#3E86F7, 10%);
+    color: #fff;
+  }
+
+  &.warn {
+    background: #FFB24C;
+    border-color: darken(#FFB24C, 10%);
+    color: #fff;
+  }
+
+  &.error {
+    background: #FF5E4C;
+    border-color: darken(#FF5E4C, 10%);
     color: #fff;
   }
 
