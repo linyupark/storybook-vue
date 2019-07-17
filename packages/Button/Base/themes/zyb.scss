@@ -5,7 +5,7 @@ button.zyb {
   background: #fff;
   color: #3E86F7;
   border: 1px solid #3E86F7;
-  border-radius: vw750px(8);
+  border-radius: vw2px(8);
   margin: 0 auto;
 
   &:disabled {
@@ -18,20 +18,20 @@ button.zyb {
   }
 
   &.l {
-    width: vw750px(690);
-    height: vw750px(88);
-    font-size: vw750px(36);
+    width: vw2px(690);
+    height: vw2px(88);
+    font-size: vw2px(36);
   }
 
   &.m {
-    width: vw750px(360);
-    height: vw750px(64);
-    font-size: vw750px(32);
+    width: vw2px(360);
+    height: vw2px(64);
+    font-size: vw2px(32);
   }
 
   &.s {
-    width: vw750px(144);
-    height: vw750px(56);
-    font-size: vw750px(28);
+    width: vw2px(144);
+    height: vw2px(56);
+    font-size: vw2px(28);
   }
 }
