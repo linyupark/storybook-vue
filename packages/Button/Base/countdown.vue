@@ -8,6 +8,11 @@
     :disabled="loadingState.value || disabled"
     :class="{ [theme]: true, [size]: true, [type]: true }"
   >
+    <span v-show="showText">
+      <!-- @slot 按钮内容 -->
+      <slot v-show="showText" name="left" />
+    </span>
+
     <span
       v-show="loadingState.value"
       ref="loading"
@@ -18,7 +23,7 @@
 
     <span v-show="showText">
       <!-- @slot 按钮内容 -->
-      <slot />
+      <slot name="right" />
     </span>
   </button>
 </template>
@@ -36,10 +41,20 @@
         type: Number,
         required: true
       },
-      /** 每次改变数字幅度 */
-      step: {
-        type: Number,
-        default: 1
+      /** 页面刷新也要保持倒计时 false | sessionName */
+      holdon: {
+        type: Boolean | String,
+        default: false
+      },
+      /** 自动开始倒计时 */
+      autoStart: {
+        type: Boolean,
+        default: false
+      },
+      /** 后续点击可以循环倒计时 */
+      loop: {
+        type: Boolean,
+        default: true,
       },
       /** 替换成倒计时数字的模板 */
       replacer: {
@@ -49,26 +64,77 @@
     },
     data() {
       return {
-        countdown: useCountdown(this.startNumber)
+        countdown: useCountdown(this.startNumber, this.holdon)
       };
     },
-    mounted() {
-      this.$refs.loading.innerHTML = this.$refs.loading.innerHTML.replace(
-        this.replacer,
-        `<i id="num-${this._uid}">${this.countdown.num}</i>`
-      );
-      this.loadingState.set(true);
-      const timer = setInterval(() => {
-        this.countdown.down(0, 1);
+    methods: {
+      /** 更新数字 */
+      updateNum() {
         this.$refs.loading.querySelector(
-          `#num-${this._uid}`
-        ).innerText = this.countdown.num;
-      }, 1000);
-      this.countdown.onStop = () => {
-        clearInterval(timer);
+            `#num-${this._uid}`
+          ).innerText = this.countdown.num;
+      },
+
+      /** 开始倒计时 */
+      start() {
+        this.updateNum();
+        this.loadingState.set(true);
+        if (this._timer) clearInterval(this._timer);
+        this._timer = setInterval(() => {
+          this.countdown.down(0, 1);
+          this.updateNum();
+        }, 1000);
+
+        this.countdown.onStop = this.onStop;
+      },
+      /** 完成倒计时后执行 */
+      onStop() {
+        clearInterval(this._timer);
         this.loadingState.set(false);
-        this.$refs.loading.innerHTML = '';
-      };
+        this._stoped = true;
+      },
+      /** 点击处理 */
+      onClick() {
+        // 经历过一次倒计时
+        if (this._stoped) {
+          /**
+           * 转发点击事件
+           * @type {Event} 处理点击
+           */
+          this.$emit("click", this.onStop);
+
+          // 可循环则重新开始
+          if (this.loop) {
+            this.countdown.init();
+            this.start();
+          }
+
+          else {
+            this.$refs.loading.innerHTML = '';
+          }
+          return;
+        }
+        this.start();
+      },
+      /** 替换数字模板 */
+      transformReplacer() {
+        this.$refs.loading.innerHTML = this.$refs.loading.innerHTML.replace(
+          this.replacer,
+          `<span id="num-${this._uid}">${this.countdown.num}</span>`
+        );
+      }
+    },
+    mounted() {
+      this.transformReplacer();
+
+      this.countdown.onContinue = this.start;
+      this.countdown.init();
+      if (this.autoStart) {
+        this.start();
+      }
+    },
+    beforeDestroy () {
+      clearInterval(this._timer);
     }
   };
 </script>

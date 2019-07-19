@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/vue';
-import { text, select, boolean } from '@storybook/addon-knobs';
+import { text, select, boolean, number } from '@storybook/addon-knobs';
 import ButtonBase from './index';
 import IconSvg from '@crh/vue/icon/svg';
 import ButtonCountdown from './countdown';
@@ -103,12 +103,44 @@ storiesOf('ELEMENT|Button', module)
       components: {
         ButtonCountdown
       },
+      props: {
+        /** 起始数字 */
+        startNumber: {
+          type: Number,
+          default: number('startNumber: 起始数字', 5)
+        },
+        /** 页面刷新也要保持倒计时 */
+        holdon: {
+          type: Boolean | String,
+          default: boolean('holdon: 页面刷新也要保持倒计时', true)
+        },
+        /** 自动开始倒计时 */
+        autoStart: {
+          type: Boolean,
+          default: boolean('autoStart: 自动开始倒计时', true)
+        },
+        /** 后续点击可以循环倒计时 */
+        loop: {
+          type: Boolean,
+          default: boolean('loop: 后续点击可以循环倒计时', true),
+        },
+        /** 替换成倒计时数字的模板 */
+        replacer: {
+          type: String,
+          default: text('replacer: 替换成倒计时数字的模板', "{[num]}")
+        }
+      },
       template: `
     <div>
       <h4>扩展：倒计时</h4>
-      <ButtonCountdown :startNumber="5">
-        <span slot="loading">倒计时 {[num]}s</span>
-        开始阅读
+      <ButtonCountdown 
+        :startNumber="startNumber" 
+        :holdon="holdon === true ? '@crh/vue/button/countdown': false"
+        :autoStart="autoStart"
+        :loop="loop"
+      >
+        <span slot="left">开始阅读</span>
+        <span slot="loading">({{replacer}}秒)</span>
       </ButtonCountdown>
     </div>
   `
