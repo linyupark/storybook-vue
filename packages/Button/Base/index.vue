@@ -7,6 +7,7 @@
     @click="onClick"
     :disabled="loadingState.value || disabled"
     :class="{ [theme]: true, [size]: true, [type]: true }"
+    :style="{...inlineStyles}"
   >
     <span v-show="loadingState.value">
       <!-- @slot 加载状态展示内容 -->
@@ -55,6 +56,11 @@
       loading: {
         type: Boolean,
         default: false
+      },
+      /** 微调样式 */
+      inlineStyles: {
+        type: Object,
+        default: () => ({})
       }
     },
     data() {
@@ -80,8 +86,8 @@
         });
       },
     },
-    async created() {
-      await import(`./themes/${this.theme}.scss`);
+    created() {
+      import(`./themes/${this.theme}.scss`);
       this.loadingState.set(this.loading);
     },
     mounted() {}

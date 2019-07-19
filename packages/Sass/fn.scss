@@ -1,4 +1,4 @@
 // vw 转 px 无需 rem
-@function vw2px($px, $max: 750) {
+@function px2vw($px, $max: 750) {
   @return ($px / $max) * 100vw;
 }

@@ -1,3 +1,7 @@
+/**
+ * 布林值切换
+ * @param {Boolean} initValue 初始值 
+ */
 export default function(initValue = false) {
   return {
     value: initValue,
