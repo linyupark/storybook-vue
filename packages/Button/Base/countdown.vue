@@ -9,7 +9,7 @@
     :class="{ [theme]: true, [size]: true, [type]: true }"
   >
     <span v-show="showText">
-      <!-- @slot 按钮内容 -->
+      <!-- @slot 左侧按钮内容 -->
       <slot v-show="showText" name="left" />
     </span>
 
@@ -22,7 +22,7 @@
     </span>
 
     <span v-show="showText">
-      <!-- @slot 按钮内容 -->
+      <!-- @slot 右侧按钮内容 -->
       <slot name="right" />
     </span>
   </button>
@@ -80,6 +80,11 @@
         this.updateNum();
         this.loadingState.set(true);
         if (this._timer) clearInterval(this._timer);
+        if (this._finished) {
+          this.loadingState.set(false);
+          this.$refs.loading.innerHTML = '';
+          return;
+        }
         this._timer = setInterval(() => {
           this.countdown.down(0, 1);
           this.updateNum();
@@ -88,27 +93,29 @@
         this.countdown.onStop = this.onStop;
       },
       /** 完成倒计时后执行 */
-      onStop() {
+      onStop(finished  = false) {
         clearInterval(this._timer);
         this.loadingState.set(false);
         this._stoped = true;
+        if (finished) this._finished = true;
       },
       /** 点击处理 */
       onClick() {
-        // 经历过一次倒计时
-        if (this._stoped) {
+        if (this._finished) return;
+        //  不是自动开始的或者经历过一次倒计时要触发点击
+        if (!this.autoStart || this._stoped) {
           /**
            * 转发点击事件
            * @type {Event} 处理点击
            */
           this.$emit("click", this.onStop);
-
+        }
+        if (this._stoped) {
           // 可循环则重新开始
           if (this.loop) {
             this.countdown.init();
             this.start();
           }
-
           else {
             this.$refs.loading.innerHTML = '';
           }

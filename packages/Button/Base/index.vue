@@ -15,7 +15,6 @@
     </span>
 
     <span v-show="showText">
-      <!-- @slot 按钮内容 -->
       <slot />
     </span>
   </button>

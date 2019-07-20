@@ -130,20 +130,26 @@ storiesOf('ELEMENT|Button', module)
           default: text('replacer: 替换成倒计时数字的模板', "{[num]}")
         }
       },
+      methods: {
+        onClick(stop) {
+          // stop(true);
+        }
+      },
       template: `
-    <div>
-      <h4>扩展：倒计时</h4>
-      <ButtonCountdown 
-        :startNumber="startNumber" 
-        :holdon="holdon === true ? '@crh/vue/button/countdown': false"
-        :autoStart="autoStart"
-        :loop="loop"
-      >
-        <span slot="left">开始阅读</span>
-        <span slot="loading">({{replacer}}秒)</span>
-      </ButtonCountdown>
-    </div>
-  `
+        <div>
+          <h4>扩展：倒计时</h4>
+          <ButtonCountdown 
+            :startNumber="startNumber" 
+            :holdon="holdon === true ? '@crh/vue/button/countdown': false"
+            :autoStart="autoStart"
+            :loop="loop"
+            @click="onClick"
+          >
+            <span slot="left">开始阅读</span>
+            <span slot="loading">({{replacer}}秒)</span>
+          </ButtonCountdown>
+        </div>
+      `
     }),
     {
       info: true,
