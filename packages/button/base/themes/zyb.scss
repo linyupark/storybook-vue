@@ -1,0 +1,50 @@
+button.zyb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #3E86F7;
+  border: 1px solid #3E86F7;
+  border-radius: px2vw(8);
+  margin: 0 auto;
+
+  &:disabled {
+    opacity: 0.4;
+  }
+
+  &.primary {
+    background: #3E86F7;
+    border-color: darken(#3E86F7, 10%);
+    color: #fff;
+  }
+
+  &.warn {
+    background: #FFB24C;
+    border-color: darken(#FFB24C, 10%);
+    color: #fff;
+  }
+
+  &.error {
+    background: #FF5E4C;
+    border-color: darken(#FF5E4C, 10%);
+    color: #fff;
+  }
+
+  &.l {
+    width: px2vw(690);
+    height: px2vw(88);
+    font-size: px2vw(36);
+  }
+
+  &.m {
+    width: px2vw(360);
+    height: px2vw(64);
+    font-size: px2vw(32);
+  }
+
+  &.s {
+    width: px2vw(144);
+    height: px2vw(56);
+    font-size: px2vw(28);
+  }
+}
