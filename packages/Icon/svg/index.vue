@@ -44,7 +44,7 @@
 </template>
 
 <script>
-  import useScriptLoader from "@crh/vue/mixins/useScriptLoader";
+  import useScriptLoader from "@crh/vue/functions/useScriptLoader";
   export default {
     name: "IconSvg",
     components: {},

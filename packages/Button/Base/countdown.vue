@@ -30,7 +30,7 @@
 
 <script>
   import ButtonBase from "@crh/vue/button/base";
-  import useCountdown from "@crh/vue/mixins/useCountdown";
+  import useCountdown from "@crh/vue/functions/useCountdown";
 
   export default {
     name: "ButtonCountdown",

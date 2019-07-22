@@ -2,7 +2,7 @@
 
 **包含**
 
-- `mixins` 各类工具函数
+- `functions` 各类工具函数
 - `sass` 常用全局样式
 - 其他 UI 组件，在线演示地址：http://nbang.dynv6.net:13530
 

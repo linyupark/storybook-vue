@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import useBoolean from "@crh/vue/mixins/useBoolean";
+  import useBoolean from "@crh/vue/functions/useBoolean";
 
   export default {
     name: "ButtonBase",
