@@ -35,7 +35,8 @@
       :class="{ rotate: rotate > 0 }"
       :style="{
         fill: color,
-        animationDuration: `${1/rotate}s`
+        animationDuration: `${1/rotate}s`,
+        ...inlineStyles
       }"
     >
       <use :xlink:href="`#${icon}`"></use>
@@ -72,6 +73,11 @@
       rotate: {
         type: Number,
         default: 0
+      },
+      /** 额外样式 */
+      inlineStyles: {
+        type: Object,
+        default: () => ({})
       }
     },
     data() {
