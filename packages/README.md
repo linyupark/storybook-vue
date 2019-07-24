@@ -1,5 +1,9 @@
 ### 适用于 Vue 的综合库（未编译）
 
+**changelog**
+
+* @0.0.4-debug 新增 List , ListItem, FilterDropdown 组件
+
 **包含**
 
 - `functions` 各类工具函数
