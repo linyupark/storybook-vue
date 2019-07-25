@@ -6,7 +6,7 @@ import List from '@crh/vue/list';
 import ListItem from '@crh/vue/list/item';
 import IconSvg from '@crh/vue/icon/svg';
 
-storiesOf('ELEMENT|Filter', module).add(
+storiesOf('基础元素|Filter', module).add(
   'Dropdown',
   () => ({
     components: {

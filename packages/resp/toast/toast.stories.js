@@ -4,8 +4,8 @@ import { text, select, boolean, number, array } from '@storybook/addon-knobs';
 import Toast from './index';
 import IconSvg from '@crh/vue/icon/svg';
 
-storiesOf('ELEMENT|Response', module).add(
-  'Toast',
+storiesOf('反馈|Toast', module).add(
+  'Base',
   () => ({
     components: {
       Toast,
