@@ -12,7 +12,7 @@
       ...inlineStyles
     }"
     >
-      <!-- @slot 提示信息内容前缀预留 -->
+      <!-- @slot 提示信息内容 -->
       <slot />
     </div>
   </div>
@@ -94,7 +94,9 @@
       };
     },
     methods: {
-      /** 执行现实操作 */
+      /** 
+       * 执行显示操作 
+       */
       show() {
         this.stateVisible = true;
         if (this.duration === 0) {
@@ -102,13 +104,19 @@
         }
         setTimeout(this.close, this.duration);
       },
-      /** 执行关闭操作 */
+      /** 
+       * 执行关闭操作 
+       */
       close() {
         this.stateVisible = false;
 
         // 确保消失动画结束后再执行
         setTimeout(() => {
           this.onClose();
+          /**
+           * 发送close事件
+           * @type {Event}
+           */
           this.$emit("close");
         }, 300);
       }

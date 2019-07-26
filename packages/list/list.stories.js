@@ -5,7 +5,7 @@ import List from './index';
 import ListItem from './item';
 import IconSvg from '@crh/vue/icon/svg';
 
-storiesOf('基础元素|List', module).add(
+storiesOf('元素|List', module).add(
   'Base',
   () => ({
     components: {

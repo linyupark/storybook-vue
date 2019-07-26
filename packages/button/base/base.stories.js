@@ -4,7 +4,7 @@ import ButtonBase from './index';
 import IconSvg from '@crh/vue/icon/svg';
 import ButtonCountdown from './countdown';
 
-storiesOf('基础元素|Button', module)
+storiesOf('元素|Button', module)
   .add(
     'Base',
     () => ({

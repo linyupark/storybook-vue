@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-  @import "@crh/vue/sass/animation.scss";
+  @import "~@crh/vue/sass/animation.scss";
   .icon-wrapper {
     width: 1em;
     height: 1em;

@@ -2,7 +2,7 @@ import { storiesOf } from '@storybook/vue';
 import { text, number } from '@storybook/addon-knobs';
 import IconSvg from './index';
 
-storiesOf('基础元素|Icon', module).add(
+storiesOf('元素|Icon', module).add(
   'Svg',
   () => ({
     components: {

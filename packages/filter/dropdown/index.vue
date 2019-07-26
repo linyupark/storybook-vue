@@ -22,7 +22,7 @@
         v-for="(item, i) in tabItems"
         :key="i"
       >
-        {{item.text}}
+        <span v-html="item.text"></span>
         <IconSvg
           class="icon"
           icon="icon-xiala"
@@ -38,13 +38,13 @@
       class="options-slot"
       v-for="(slot, i) in tabItems"
       :key="i"
-      v-show="expandTab && expandTab.key == slot.key"
+      v-show="expandTab && expandTab.name == slot.name"
       :style="{
         top: maskStyles().top
       }"
     >
-      <!-- @slot slot-[key] 对应key的筛选具体内容 -->
-      <slot :name="`slot-${slot.key}`" />
+      <!-- @slot slot-[name] 对应name的筛选具体内容 -->
+      <slot :name="`slot-${slot.name}`" />
     </div>
     <!-- 遮罩 -->
     <div
@@ -92,6 +92,10 @@
       onExpand(index) {
         if (index == this.stateExpandIndex) return this.onUnexpand();
         this.stateExpandIndex = index;
+        /**
+         * 打开筛选器内容
+         * @type {Event}
+         */
         this.$emit('expand', this.tabItems[index]);
       },
       /** 遮罩层的高度跟顶部位置计算 */
@@ -108,6 +112,11 @@
       /** 收起折叠 */
       onUnexpand() {
         this.stateExpandIndex = -1;
+        /**
+         * 关闭筛选器内容
+         * @type {Event}
+         */
+        this.$emit('unexpand');
       }
     },
     computed: {

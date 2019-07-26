@@ -5,12 +5,14 @@ import FilterDropdown from './index';
 import List from '@crh/vue/list';
 import ListItem from '@crh/vue/list/item';
 import IconSvg from '@crh/vue/icon/svg';
+import FilterTags from "@crh/vue/filter/tags";
 
-storiesOf('基础元素|Filter', module).add(
+storiesOf('元素|Filter', module).add(
   'Dropdown',
   () => ({
     components: {
       FilterDropdown,
+      FilterTags,
       List,
       ListItem,
       IconSvg
@@ -19,76 +21,96 @@ storiesOf('基础元素|Filter', module).add(
     },
     data() {
       return {
-        // 时间排序
-        timeFilterOptions: [
-          { key: 'time', value: 'desc', text: '时间倒序' },
-          { key: 'time', value: 'asc', text: '时间正序' }
-        ],
-        // 状态选择
-        statusFilterOptions: [
-          { key: 'status', value: '0', text: '待处理' },
-          { key: 'status', value: '1', text: '已处理' }
-        ],
         // 用于程序修改选项卡内容
         tabItems: [
-          { key: 'time', value: 'desc', text: '时间倒序' },
-          { key: 'status', value: '0', text: '待处理' }
+          { name: "order_by", key: "0", text: "时间倒序" },
+          { name: "action_type", text: "行为筛选", tags: [] }
         ],
-        // 选中项的值
-        selectedItem: {}
+        // 时间排序
+        orderByFilterOptions: [
+          { name: "order_by", key: "0", text: "时间倒序" },
+          { name: "order_by", key: "1", text: "时间顺序" }
+        ],
+        // 行为筛选
+        actionTypeFilterOptions: [
+          { name: "action_type", key: "0", text: "客户流失" },
+          { name: "action_type", key: "1", text: "购买理财" }
+        ],
       };
     },
     methods: {
-      onExpand(selectedItem) {
-        this.selectedItem = selectedItem;
+      onExpand(tabItem) {
+        if(tabItem.name === 'action_type') {
+          // 避免选择了标签没有点确定再打开会选中之前的tag
+          this.$refs.filterTags.initSelectedItems();
+        }
       },
+
       isSelected(optionItem, selectedItem) {
+        console.log(optionItem, selectedItem);
         return (
-          optionItem.key == selectedItem.key &&
-          optionItem.value == selectedItem.value
+          optionItem.name == selectedItem.name &&
+          optionItem.key == selectedItem.key
         );
       },
-      selectOrder(newItem) {
+
+      onOrderBtConfirm(newItem) {
         this.selectedItem = newItem;
-        console.log('选择了', JSON.stringify(newItem));
-        const index = this.tabItems.findIndex(item => item.key == newItem.key);
-        this.tabItems[index] = newItem;
+        console.log("时间排序选择了", JSON.stringify(newItem));
+        this.tabItems[0] = newItem;
         this.tabItems = [...this.tabItems];
         this.$refs.fdd.onUnexpand();
       },
+
+      /** 当行为筛选确定 */
+      onActionTypeConfirm(tags) {
+        console.log("行为筛选选择了", JSON.stringify(tags));
+        this.tabItems[1].tags = tags;
+        if (tags.length === 0) {
+          this.tabItems[1].text = '行为筛选';
+        }
+        else {
+          this.tabItems[1].text = `行为筛选(${tags.length})`;
+        }
+        this.tabItems = [...this.tabItems];
+        this.$refs.fdd.onUnexpand();
+      }
     },
     template: `
       <div>
         <h4>这里是头部</h4>
-        <FilterDropdown :tabItems="tabItems" @expand="onExpand" ref="fdd">
-          <List slot="slot-time">
-            <ListItem 
-              v-for="(item, i) in timeFilterOptions" 
+        <!-- 列表过滤 -->
+        <FilterDropdown
+          @expand="onExpand"
+          :tabItems="tabItems"
+          ref="fdd"
+        >
+          <!-- 时间正倒排序 -->
+          <List slot="slot-order_by">
+            <ListItem
+              v-for="(item, i) in orderByFilterOptions"
               :key="i"
-              @click="selectOrder(item)"
+              @click="onOrderBtConfirm(item)"
             >
-              {{item.text}}
+              <span class="order-text">{{item.text}}</span>
               <IconSvg 
-                v-show="isSelected(item, selectedItem)"
+                v-show="isSelected(item, tabItems[0])"
                 cdn="//at.alicdn.com/t/font_1001796_k890pb7yti.js" 
                 icon="icon-dangougouxuan"
               />
             </ListItem>
           </List>
-          <List slot="slot-status">
-          <ListItem 
-            v-for="(item, i) in statusFilterOptions" 
-            :key="i"
-            @click="selectOrder(item)"
+
+          <!-- 行为筛选 -->
+          <FilterTags
+            slot="slot-action_type"
+            :items="actionTypeFilterOptions"
+            :selectedItems="tabItems[1].tags.slice()"
+            @confirm="onActionTypeConfirm"
+            ref="filterTags"
           >
-            {{item.text}}
-            <IconSvg 
-              v-show="isSelected(item, selectedItem)"
-              cdn="//at.alicdn.com/t/font_1001796_k890pb7yti.js" 
-              icon="icon-dangougouxuan"
-            />
-          </ListItem>
-          </List>
+            行为标签（可多选）
+          </FilterTags>
         </FilterDropdown>
       </div>
     `
