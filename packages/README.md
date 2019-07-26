@@ -2,6 +2,7 @@
 
 **changelog**
 
+* @0.0.6-dev 新增 filter/tags 可作为 filterDropdown 中的标签选择筛选
 * @0.0.4-debug 新增 List , ListItem, FilterDropdown 组件
 
 **包含**
