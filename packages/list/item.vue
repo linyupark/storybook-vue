@@ -8,6 +8,7 @@
         ...inlineStyles
       }"
     >
+      <!-- @slot 列表单元内容 -->
       <slot />
     </div>
   </div>
@@ -18,30 +19,29 @@
   .item-wrapper {
     position: relative;
     overflow: hidden;
-  }
+    /deep/ .item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: px2vw(88);
+      padding: 0 $sideSpace;
+      border-bottom: 1px solid $borderColor;
+      cursor: pointer;
 
-  .item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: px2vw(88);
-    padding: 0 $sideSpace;
-    border-bottom: 1px solid $borderColor;
-    cursor: pointer;
+      &.left {
+        padding-left: 0;
+        margin-left: $sideSpace;
+      }
 
-    &.left {
-      padding-left: 0;
-      margin-left: $sideSpace;
-    }
+      &.right {
+        padding-right: 0;
+        margin-right: $sideSpace;
+      }
 
-    &.right {
-      padding-right: 0;
-      margin-right: $sideSpace;
-    }
-
-    &.both {
-      margin: 0 $sideSpace;
-      padding: 0;
+      &.both {
+        margin: 0 $sideSpace;
+        padding: 0;
+      }
     }
   }
 </style>
