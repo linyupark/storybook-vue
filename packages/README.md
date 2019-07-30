@@ -2,6 +2,7 @@
 
 **changelog**
 
+* @0.0.8-dev 新增 resp/modal 提示跟确认弹框
 * @0.0.7-dev 新增 list/slide 可滑动操作的列表单元
 * @0.0.6-dev 新增 filter/tags 可作为 filterDropdown 中的标签选择筛选
 * @0.0.4-debug 新增 List , ListItem, FilterDropdown 组件
