@@ -2,7 +2,26 @@ import useObjectQueryStringify from './useObjectQueryStringify';
 
 /**
  * 封装 protocol buffers 请求方法
- * 范例：.proto 转 js 命令npx pbjs -t json-module -w es6 -o src/?.js  src/?.proto
+ * 
+ * 范例
+ * .proto 转 js 命令npx pbjs -t json-module -w es6 -o src/?.js  src/?.proto
+ * 
+ * get请求
+ * usePBRequest(protoRoot)('model.CommonRs')('get', '/api/testpb')
+  .then(resp => {
+    console.log(resp);
+  });
+  post 请求
+  usePBRequest(protoRoot, 'model.CommonReq')('model.CommonRs')(
+    'post',
+    '/api/posttestpb2',
+    {
+      userId: 1,
+      token: 'aaaa'
+    }
+  ).then(resp => {
+    console.log(resp);
+  });
  * @param {Object} protoRoot .proto文件转换成js的对象内容
  * @param {String} reqMessageName 对应请求消息格式的名称 比如 model.CommonReq
  */
@@ -16,7 +35,6 @@ export default (protoRoot, reqMessageName) => {
    * @param {String} resMessageName 对应反馈消息格式的名称 比如 model.CommonRes
    */
   return function(resMessageName) {
-    
     const resMessage = protoRoot.lookup(resMessageName);
 
     /**
@@ -34,7 +52,7 @@ export default (protoRoot, reqMessageName) => {
         const querySearch = useObjectQueryStringify(data);
         url += querySearch === '' ? '' : `?${querySearch}`;
       }
-  
+
       return new Promise((rs, rj) => {
         const xhr = new XMLHttpRequest();
         xhr.open(method, url, true);
@@ -64,5 +82,5 @@ export default (protoRoot, reqMessageName) => {
         xhr.send(sendData);
       });
     };
-  }
+  };
 };
