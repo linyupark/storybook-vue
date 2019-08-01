@@ -1,7 +1,7 @@
 /**
  * 对象转换成 url 查询
- * @param {Object} params 
- * @param {String} prefix 
+ * @param {Object} params
+ * @param {String} prefix
  */
 export default function(params = {}, prefix) {
   const query = Object.keys(params).map(k => {
