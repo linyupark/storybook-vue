@@ -40,7 +40,8 @@
       :key="i"
       v-show="expandTab && expandTab.name == slot.name"
       :style="{
-        top: maskStyles().top
+        top: maskStyles().top,
+        ...optionsInlineStyles
       }"
     >
       <!-- @slot slot-[name] 对应name的筛选具体内容 -->
@@ -50,7 +51,7 @@
     <div
       class="mask"
       v-show="expandTab"
-      :style="{...maskStyles()}"
+      :style="{...maskStyles(), ...maskInlineStyles}"
       @click="onUnexpand"
     ></div>
   </div>
@@ -77,6 +78,16 @@
       tabExpandIndex: {
         type: Number,
         default: -1
+      },
+      /** 选择区域的整体样式微调 */
+      optionsInlineStyles: {
+        type: Object,
+        default: () => ({})
+      },
+      /** 遮罩层的具体样式微调 */
+      maskInlineStyles: {
+        type: Object,
+        default: () => ({})
       }
     },
     data() {
