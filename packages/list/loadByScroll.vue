@@ -15,7 +15,7 @@
 <script>
   import useBoolean from "@crh/vue/functions/useBoolean";
   export default {
-    name: 'ListLoadByScroll',
+    name: "ListLoadByScroll",
     components: {},
     props: {
       /** 滚动容器dom selector 指定 */
@@ -36,7 +36,15 @@
     },
     data() {
       return {
-        stateLoading: useBoolean(false),
+        stateLoading: useBoolean(false)
+      };
+    },
+    watch: {
+      noMore(isNoMore) {
+        if (isNoMore) {
+          // 当没有更多的时候自动关闭loading状态
+          this.stateLoading.set(false);
+        }
       }
     },
     methods: {
@@ -49,19 +57,30 @@
         this.$delayTimer = setTimeout(() => {
           const containerRect = this.$containerEl.getBoundingClientRect();
           const elRect = this.$el.getBoundingClientRect();
-          const distance = Math.abs(containerRect.y + containerRect.height - elRect.y);
-          // console.log('距离', distance);
-          if (distance <= this.distance && !this.noMore && !this.stateLoading.value) {
+          const distance = Math.abs(
+            (containerRect.y || containerRect.top) +
+              containerRect.height -
+              (elRect.y || elRect.top)
+          );
+          // console.log('距离', distance, elRect.height);
+          if (
+            (distance - elRect.height) <= this.distance &&
+            !this.noMore &&
+            !this.stateLoading.value
+          ) {
             this.stateLoading.set(true);
             this.$nextTick(() => {
               // 自动把loading的高度补偿滚动保证能被看到
-              this.$containerEl.scrollTop += (this.$el.getBoundingClientRect().height + distance);
+              this.$containerEl.scrollTop +=
+                this.$el.getBoundingClientRect().height + distance;
             });
             /**
              * 触发加载事件
              * @type {Event} load
              */
-            this.$emit('load', this.stateLoading);
+            this.$emit("load", () => {
+              this.stateLoading.set(false);
+            });
           }
         }, 100);
       }
@@ -71,12 +90,15 @@
       this.$nextTick(() => {
         this.$containerEl = this.$root.$el.querySelector(this.container);
         if (!this.$containerEl) {
-          throw new Error('没有找到滚动容器，请查看 container 中设置的 selector 是否正确');
+          throw new Error(
+            "没有找到滚动容器，请查看 container 中设置的 selector 是否正确"
+          );
         }
-        this.$containerEl.addEventListener('scroll', this.scrollHandler, false);
+        this.$containerEl.addEventListener("scroll", this.scrollHandler, false);
       });
     },
-    // name: '', watch: {}, mixins: [], filters: {}, directives: {},
-    // beforeCreate() {}, created() {}, beforeMount() {}, beforeUpdate() {}, updated() {}, activated() {}, deactivated() {}, beforeDestroy() {}, destroyed() {},
+    beforeDestroy() {
+      this.$containerEl.removeEventListener("scroll", this.scrollHandler, false);
+    }
   };
 </script>
