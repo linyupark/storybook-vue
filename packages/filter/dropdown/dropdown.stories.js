@@ -47,7 +47,9 @@ storiesOf('元素|Filter', module).add(
             multi: false,
             tags: [
               { key: 'hz', text: '杭州' },
-              { key: 'sh', text: '上海' }
+              { key: 'sh', text: '上海' },
+              { key: 'bj', text: '北京' },
+              { key: 'gz', text: '广州' },
             ]
           }
         ]

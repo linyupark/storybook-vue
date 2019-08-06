@@ -23,7 +23,10 @@ storiesOf('元素|Filter', module).add(
     template: `
       <div>
         <h4>滑动tab</h4>
-        <FilterTabSlide :index="index" @change="onChange">
+        <FilterTabSlide :index="index" @change="onChange" :slideInlineStyles="{
+          width: '20%',
+          height: '2px'
+        }">
           <div style="width: 50%; text-align: center">选项1</div>
           <div style="width: 50%; text-align: center">选项2</div>
         </FilterTabSlide>
