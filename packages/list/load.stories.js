@@ -8,7 +8,7 @@ import Refresh from "./refresh";
 import IconSvg from '@crh/vue/icon/svg';
 
 storiesOf('元素|List', module).add(
-  'loadByScroll',
+  'Refresh+LoadByScroll',
   () => ({
     components: {
       List,
