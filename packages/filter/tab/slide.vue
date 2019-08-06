@@ -107,11 +107,11 @@
     computed: {},
     mounted() {
       this.setCurrentTab();
-      this.$el.onresize = () => {
-        this.setSlideLeft();
-      };
+      // 避免切换竖横屏导致定位错误
+      window.addEventListener('resize', this.setSlideLeft, false);
+    },
+    beforeDestroy() {
+      window.removeEventListener('resize', this.setSlideLeft, false);
     }
-    // name: '', watch: {}, mixins: [], filters: {}, directives: {},
-    // beforeCreate() {}, created() {}, beforeMount() {}, beforeUpdate() {}, updated() {}, activated() {}, deactivated() {}, beforeDestroy() {}, destroyed() {},
   };
 </script>
