@@ -2,6 +2,7 @@
 
 **changelog**
 
+* @0.0.10-dev list/refresh, list/loadByScroll 增加下拉刷新跟上拉加载
 * @0.0.9-dev filter/dropdown 增加选择框跟遮罩层的样式微调
 * @0.0.8-dev 新增 resp/modal 提示跟确认弹框
 * @0.0.7-dev 新增 list/slide 可滑动操作的列表单元
