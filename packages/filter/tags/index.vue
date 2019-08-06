@@ -1,22 +1,23 @@
 <template>
   <!-- 标签选择筛选 -->
   <div class="filter-tags">
-    <label>
-      <!-- @slot 标签说明 -->
-      <slot />
-    </label>
-    <!-- 标签列表 -->
-    <div class="tags">
-      <div
-        class="tag"
-        :class="{ selected: isSelected(item) }"
-        v-for="(item, i) in items"
-        :key="i"
-        @click="onSelect(item)"
-      >
-        {{item.text}}
+    <template v-for="(item, i) in items">
+      <label :key="`label-${i}`">
+        {{item.label}}
+      </label>
+      <!-- 标签列表 -->
+      <div class="tags" :key="`tags-${i}`">
+        <div
+          class="tag"
+          :class="{ selected: isSelected(item, tag) }"
+          v-for="(tag, j) in item.tags"
+          :key="j"
+          @click="onSelect(tag, item)"
+        >
+          {{tag.text}}
+        </div>
       </div>
-    </div>
+    </template>
     <!-- 确认按钮 -->
     <div class="btn-row">
       <button class="reset" @click="onReset">清空</button>
@@ -85,21 +86,16 @@
     props: {
       /**
        * 标签选项列表
-       * { name, key, text }
+       * [name, label, tags: [{ key, text }], multi]
        */
       items: {
         type: Array,
-        default: () => []
-      },
-      /** 是否支持多选 */
-      multi: {
-        type: Boolean,
-        default: true
+        default: () => ([])
       },
       /** 默认选中的选项 */
       selectedItems: {
-        type: Array,
-        default: () => []
+        type: Object,
+        default: () => ({})
       }
     },
     data() {
@@ -109,22 +105,25 @@
     },
     methods: {
       /** 选中某项 */
-      onSelect(item) {
-        if (!this.multi) {
-          this.stateSelectedItems = [item];
+      onSelect(tag, group) {
+        if (this.isSelected(group, tag)) {
+          // 清除
+          this.stateSelectedItems[group.name] = this.stateSelectedItems[group.name].filter(oItem => oItem.key != tag.key);
+        }
+        else if (!group.multi) {
+          this.stateSelectedItems[group.name] = [tag];
+          this.stateSelectedItems = {...this.stateSelectedItems};
           return;
         }
-        if (this.isSelected(item)) {
-          // 清除
-          this.stateSelectedItems = this.stateSelectedItems.filter(oItem => oItem.key != item.key);
-        }
         else {
-          this.stateSelectedItems = this.stateSelectedItems.concat(item);
+          this.stateSelectedItems[group.name] = (this.stateSelectedItems[group.name] || []).concat(tag);
         }
+        // 更新状态
+        this.stateSelectedItems = {...this.stateSelectedItems};
       },
       /** 全部清楚 */
       onReset() {
-        this.stateSelectedItems = [];
+        this.stateSelectedItems = {};
       },
       /** 确认提交 */
       onConfirm() {
@@ -137,9 +136,10 @@
       /**
        * 是否选中
        */
-      isSelected(item) {
-        return !!~this.stateSelectedItems.findIndex(
-          sItem => sItem.key === item.key
+      isSelected(group, tag) {
+        if (!this.stateSelectedItems[group.name]) return false;
+        return !!~this.stateSelectedItems[group.name].findIndex(
+          sItem => sItem.key === tag.key
         );
       },
       /** 手动恢复到初始化数据 */
