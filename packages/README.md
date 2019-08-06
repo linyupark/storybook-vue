@@ -2,6 +2,7 @@
 
 **changelog**
 
+* @0.0.9-dev filter/dropdown 增加选择框跟遮罩层的样式微调
 * @0.0.8-dev 新增 resp/modal 提示跟确认弹框
 * @0.0.7-dev 新增 list/slide 可滑动操作的列表单元
 * @0.0.6-dev 新增 filter/tags 可作为 filterDropdown 中的标签选择筛选
