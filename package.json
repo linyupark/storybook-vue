@@ -7,7 +7,7 @@
     "url": "http://git.cairenhui.com/linyu/vue-h5-storybook.git"
   },
   "scripts": {
-    "storybook": "start-storybook -p 3000 -h 0.0.0.0",
+    "storybook": "start-storybook -p 3333 -h 0.0.0.0",
     "build-storybook": "build-storybook",
     "test": "jest --verbose"
   },

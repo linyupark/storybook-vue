@@ -10,7 +10,7 @@ export default {
   getMonthweek(date) {
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
-    const dateFirstOne = new Date(year + '/' + month + '/1');
+    const dateFirstOne = new Date(year + '-' + month + '-1');
     return this.sundayStart
       ? dateFirstOne.getDay() == 0
         ? 7
@@ -23,7 +23,7 @@ export default {
    * 获取当前日期上个月或者下个月
    */
   getOtherMonth(date, str = 'nextMonth') {
-    const timeArray = this.dateFormat(date).split('/');
+    const timeArray = this.dateFormat(date).split('-');
     const year = timeArray[0];
     const month = timeArray[1];
     const day = timeArray[2];
@@ -53,7 +53,7 @@ export default {
     if (day2 < 10) {
       day2 = '0' + day2;
     }
-    const t2 = year2 + '/' + month2 + '/' + day2;
+    const t2 = year2 + '-' + month2 + '-' + day2;
     return new Date(t2);
   },
   // 上个月末尾的一些日期
@@ -69,9 +69,9 @@ export default {
     for (let i = 0; i < leftNum; i++) {
       const nowTime =
         preDate.getFullYear() +
-        '/' +
+        '-' +
         (preDate.getMonth() + 1) +
-        '/' +
+        '-' +
         (num + i);
       arr.push({
         id: num + i,
@@ -91,9 +91,9 @@ export default {
     for (let i = 0; i < _length; i++) {
       const nowTime =
         nextDate.getFullYear() +
-        '/' +
+        '-' +
         (nextDate.getMonth() + 1) +
-        '/' +
+        '-' +
         (i + 1);
       arr.push({
         id: i + 1,
@@ -106,10 +106,18 @@ export default {
   },
   // format日期
   dateFormat(date) {
-    date = typeof date === 'string' ? new Date(date.replace(/\-/g, '/')) : date;
+    date = typeof date === 'string' ? new Date(date.replace(/\//g, '-')) : date;
     return (
-      date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
+      date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
     );
+  },
+  // 不足双位数的加0
+  dateFormatXX(date) {
+    const dateArr = this.dateFormat(date).split('-').map((unit, i) => {
+      if (i > 0 && String(unit).length === 1)  return `0${unit}`;
+      return unit;
+    });
+    return dateArr.join('-');
   },
   // 获取某月的列表不包括上月和下月
   getMonthListNoOther(date) {
@@ -120,7 +128,7 @@ export default {
     const toDay = this.dateFormat(new Date());
 
     for (let i = 0; i < num; i++) {
-      const nowTime = year + '/' + month + '/' + (i + 1);
+      const nowTime = year + '-' + month + '-' + (i + 1);
       arr.push({
         id: i + 1,
         date: nowTime,

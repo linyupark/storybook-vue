@@ -1,17 +1,6 @@
 <style lang="scss" scoped>
-  // @media screen and (min-width: 460px) {
-  //   .wh_item_date:hover {
-  //     background: #71c7a5;
-  //     cursor: pointer;
-  //   }
-  // }
-  // * {
-  //   margin: 0;
-  //   padding: 0;
-  // }
   .wh_container {
-    max-width: 410px;
-    margin: auto;
+    width: 100vw;
   }
   li {
     list-style-type: none;
@@ -22,24 +11,21 @@
   .wh_top_changge li {
     cursor: pointer;
     display: flex;
-    color: #fff;
-    font-size: 18px;
+    color: #ccc;
+    font-size: px2vw(32);
     flex: 1;
     justify-content: center;
     align-items: center;
-    height: 47px;
+    height: px2vw(47);
   }
   .wh_top_changge .wh_content_li {
-    cursor: auto;
     flex: 2.5;
   }
   .wh_content_all {
-    /* font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
-          "Helvetica Neue", STHeiti, "Microsoft Yahei", Tahoma, Simsun, sans-serif; */
-    background-color: #fff;
+    background: #fff;
     width: 100%;
     overflow: hidden;
-    padding-bottom: 8px;
+    padding-bottom: px2vw(8);
   }
   .wh_content {
     display: flex;
@@ -50,24 +36,24 @@
   .wh_content:first-child .wh_content_item_tag,
   .wh_content:first-child .wh_content_item {
     color: #ddd;
-    font-size: 16px;
+    font-size: px2vw(24);
   }
   .wh_content_item,
-  wh_content_item_tag {
-    font-size: 15px;
+  .wh_content_item_tag {
+    font-size: px2vw(24);
     width: 13.4%;
     text-align: center;
     color: #272727;
     position: relative;
   }
   .wh_content_item {
-    height: 40px;
+    height: px2vw(80);
   }
   /* 星期几 */
-  .wh_top_tag {
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
+  .wh_top_tag, .wh_item_date {
+    width: px2vw(80);
+    height: px2vw(80);
+    line-height: px2vw(80);
     margin: auto;
     display: flex;
     justify-content: center;
@@ -76,16 +62,8 @@
     color: #272727;
   }
   .wh_item_date {
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: relative;
-
-    .wait, .done, .exp {
+    .blue, .grey, .pink {
       position: absolute;
       width: px2vw(12);
       height: px2vw(12);
@@ -93,30 +71,26 @@
       background: #3985FC;
       bottom: $hairline2;
     }
-    .done {
+    .grey {
       background: #C7C7C7;
     }
-    .exp {
+    .pink {
       background: #FF7E71;
     }
   }
-  .wh_jiantou1 {
-    width: 12px;
-    height: 12px;
-    border-top: 2px solid #ffffff;
-    border-left: 2px solid #ffffff;
+  .wh_jiantou1, .wh_jiantou2 {
+    width: px2vw(18);
+    height: px2vw(18);
+    border-top: $hairline2 solid #ccc;
+    border-left: $hairline2 solid #ccc;
     transform: rotate(-45deg);
   }
   .wh_jiantou1:active,
   .wh_jiantou2:active {
-    border-color: #ddd;
+    border-color: #666;
   }
   .wh_jiantou2 {
-    width: 12px;
-    height: 12px;
-    border-top: 2px solid #ffffff;
-    border-right: 2px solid #ffffff;
-    transform: rotate(45deg);
+    transform: rotate(135deg);
   }
   .wh_content_item > .wh_isMark {
     margin: auto;
@@ -131,10 +105,9 @@
     color: #bfbfbf;
   }
   .wh_content_item .wh_isToday {
-    background: #3985fc;
     border-radius: 50%;
-    color: #fff;
-    .wait {
+    box-shadow: 0 0 0 $hairline2 #3985fc inset;
+    .blue {
       background: #fff;
     }
   }
@@ -143,7 +116,7 @@
     background: #3985fc;
     color: #fff;
     border-radius: 100px;
-    .wait {
+    .blue {
       background: #fff;
     }
   }
@@ -200,26 +173,41 @@
       };
     },
     props: {
+      /**
+       * 简单标注
+       */
       markDate: {
         type: Array,
         default: () => []
       },
+      /** 
+       * 多类型标注
+       * eg: [
+            {date: '2019/08/12', className: 'blue'},
+            {date: '2019/08/14', className: 'grey'},
+            {date: '2019/08/1', className: 'pink'}
+          ]
+       */
       markDateMore: {
         type: Array,
         default: () => []
       },
+      /** 顶部星期格式 */
       textTop: {
         type: Array,
         default: () => ["日", "一", "二", "三", "四", "五", "六"]
       },
+      /** 从星期日开始从左到右排列 */
       sundayStart: {
         type: Boolean,
         default: () => true
       },
+      /** 某个日期以前的不允许点击  时间戳10位 */
       agoDayHide: {
         type: String,
         default: `0`
       },
+      /** 某个日期以后的不允许点击  时间戳10位 */
       futureDayHide: {
         type: String,
         default: `2554387200`
@@ -251,6 +239,10 @@
       ChoseMonth: function(date, isChosedDay = true) {
         date = timeUtil.dateFormat(date);
         this.myDate = new Date(date);
+        /**
+         * 改变月份
+         * @type {Event}
+         */
         this.$emit("changeMonth", timeUtil.dateFormat(this.myDate));
         if (isChosedDay) {
           this.getList(this.myDate, date, isChosedDay);
@@ -312,11 +304,19 @@
           //无法选中某天
           k.dayHide = t < this.agoDayHide || t > this.futureDayHide;
           if (k.isToday) {
-            this.$emit("isToday", nowTime);
+            /**
+             * 点击的是今天
+             * @type {Event} isToday
+             */
+            this.$emit("isToday", timeUtil.dateFormatXX(nowTime));
           }
           let flag = !k.dayHide && k.otherMonth === "nowMonth";
           if (chooseDay && chooseDay === nowTime && flag) {
-            this.$emit("choseDay", nowTime);
+            /**
+             * 点击选择某日期
+             * @type {Event} choseDay
+             */
+            this.$emit("choseDay", timeUtil.dateFormatXX(nowTime));
             this.historyChose.push(nowTime);
             k.chooseDay = true;
           } else if (
