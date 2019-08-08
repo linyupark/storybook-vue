@@ -5,12 +5,12 @@
       class="modal-wrapper"
       :class="{ visible: stateVisible }"
     >
-      <div class="box">
+      <div class="box" :style="{ ...containerInlineStyles }">
         <div
           class="title"
           v-html="title"
         ></div>
-        <div class="content">
+        <div class="content" :style="{ ...contentInlineStyles }">
           <!-- @slot 弹窗主体信息 -->
           <slot />
         </div>
@@ -165,7 +165,14 @@
         default: () => {}
       },
       /** modal 信息自定义样式 */
-      inlineStyles: {
+      contentInlineStyles: {
+        type: Object,
+        default: () => ({
+          textAlign: 'center'
+        })
+      },
+      /** modal容器自定义样式 */
+      containerInlineStyles: {
         type: Object,
         default: () => ({})
       },
