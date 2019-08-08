@@ -25,8 +25,8 @@
   <i
     class="icon-wrapper"
     :style="{
-      width: `${size}em`,
-      height: `${size}em`,
+      width: `${size}`,
+      height: `${size}`,
     }"
   >
     <svg
@@ -66,8 +66,8 @@
       },
       /** 图标大小 单位: em */
       size: {
-        type: Number,
-        default: 1
+        type: String,
+        default: `1em`
       },
       /** 是否需要旋转, 0: 不旋转, 数字越大速度越快 */
       rotate: {
