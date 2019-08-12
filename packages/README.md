@@ -2,6 +2,7 @@
 
 **changelog**
 
+* @0.0.16-dev input/base/search || index 基础输入框 || 搜索框
 * @0.0.11-dev filter/tags 支持多个分组
 * @0.0.10-dev list/refresh, list/loadByScroll 增加下拉刷新跟上拉加载
 * @0.0.9-dev filter/dropdown 增加选择框跟遮罩层的样式微调

@@ -158,6 +158,8 @@
       },
       onClear() {
         this.stateValue = "";
+        // 清除操作模拟输入空内容
+        this.$emit('input', "");
         this.doFocus();
       },
       doFocus() {

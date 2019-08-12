@@ -121,6 +121,7 @@
     watch: {
       value: {
         handler(newValue) {
+          this.stateValue = newValue;
           this.$emit('search', newValue);
         }
       }
