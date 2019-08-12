@@ -22,7 +22,6 @@
         width: `${598/750*100}vw`
       }"
       @input="onInput"
-      @change="onInput"
     />
     <!-- 提示信息居中覆盖 -->
     <div v-show="empty && !isFocus" class="placeholder">
@@ -118,6 +117,13 @@
         stateValue: this.$props.value,
         stateFocus: false,
       };
+    },
+    watch: {
+      value: {
+        handler(newValue) {
+          this.$emit('search', newValue);
+        }
+      }
     },
     methods: {
       onFocus() {

@@ -18,7 +18,7 @@
     <input
       ref="input"
       :type="type"
-      v-model="stateValue"
+      :value="stateValue"
       :maxlength="max"
       :placeholder="placeholder"
       :style="{
@@ -135,12 +135,21 @@
         stateValue: this.$props.value,
       };
     },
+    watch: {
+      value: {
+        handler(newValue) {
+          this.stateValue = newValue;
+          this.$emit('input', newValue);
+        }
+      }
+    },
     methods: {
       async updateValue(event, eventName) {
         if (eventName === 'change') {
           await new Promise(resolve => setTimeout(resolve, 10));
         }
-        // console.log(`${eventName}: ${this.stateValue}`);
+        this.stateValue = event.target.value;
+        console.log(`${eventName}: ${this.stateValue}`);
         /**
          * 这里触发 input 常规的响应事件
          * @type {Event}

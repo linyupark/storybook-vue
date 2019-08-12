@@ -60,7 +60,7 @@ storiesOf('元素|Input', module).add(
           :autoFocus="autoFocus"
         />
         <h4>搜索框</h4>
-        <InputSearch placeholder="搜索机构/股东/联系人" :value="value" />
+        <InputSearch placeholder="搜索机构/股东/联系人" />
       </div>
     `
   }),
