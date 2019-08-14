@@ -66,7 +66,7 @@ storiesOf('反馈|Toast', module).add(
       }
     },
     template: `
-      <div>
+      <div style="height: 200vh">
         <h4>Toast.show 唤起微调位置</h4>
         <center><button @click="openToast">弹出</button></center>
         <h4>手动关闭</h4>

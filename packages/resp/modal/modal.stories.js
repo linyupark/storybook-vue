@@ -48,7 +48,7 @@ storiesOf('反馈|Modal', module).add(
       }
     },
     template: `
-      <div>
+      <div style="height: 200vh">
         <h4>Modal.show (alert 提醒)</h4>
         <center><button @click="openModal">警告</button></center>
         <h4>Modal.show (confirm 确认)</h4>

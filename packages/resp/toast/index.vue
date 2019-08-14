@@ -3,8 +3,9 @@
   <div
     class="toast-wrapper"
     :class="{
-    visible: stateVisible
-  }"
+      visible: stateVisible
+    }"
+    ref="wrapper"
   >
     <div
       class="toast"
@@ -22,7 +23,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
@@ -85,6 +86,11 @@
       duration: {
         type: Number,
         default: 1500
+      },
+      /** 设置 toast 的 zIndex */
+      zIndexOverride: {
+        type: Number,
+        default: () => 1
       }
     },
     data() {
@@ -92,6 +98,33 @@
         /** 是否展示的内部状态 */
         stateVisible: this.$props.visible
       };
+    },
+    watch: {
+      visible: {
+        handler(newState) {
+          this.stateVisible = newState;
+        },
+        immediate: true
+      },
+      stateVisible: {
+        handler(newState) {
+          if (newState) {
+            this.originStyles = document.body.getAttribute("style") || "";
+            this.scrollTop = this.getScrollTop();
+            document.body.style.position = "fixed";
+            document.body.style.width = "100%";
+            document.body.style.top = -this.scrollTop + "px";
+            document.body.style.bottom = "0px";
+            this.$refs.wrapper.style.zIndex = this.zIndexOverride;
+          } else {
+            document.body.setAttribute("style", this.originStyles);
+            document.body.scrollTop = document.documentElement.scrollTop =
+              this.scrollTop || 0;
+            this.$refs.wrapper.style.zIndex = -1;
+          }
+        },
+        immediate: false
+      }
     },
     methods: {
       /** 
@@ -119,6 +152,9 @@
            */
           this.$emit("close");
         }, 300);
+      },
+      getScrollTop() {
+        return document.body.scrollTop || document.documentElement.scrollTop;
       }
     },
     computed: {},

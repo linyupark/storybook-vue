@@ -4,13 +4,20 @@
     <div
       class="modal-wrapper"
       :class="{ visible: stateVisible }"
+      ref="wrapper"
     >
-      <div class="box" :style="{ ...containerInlineStyles }">
+      <div
+        class="box"
+        :style="{ ...containerInlineStyles }"
+      >
         <div
           class="title"
           v-html="title"
         ></div>
-        <div class="content" :style="{ ...contentInlineStyles }">
+        <div
+          class="content"
+          :style="{ ...contentInlineStyles }"
+        >
           <!-- @slot 弹窗主体信息 -->
           <slot />
         </div>
@@ -42,7 +49,11 @@
       </div>
 
     </div>
-    <div class="mask" :class="{ visible: stateVisible }"></div>
+    <div
+      class="mask"
+      ref="mask"
+      :class="{ visible: stateVisible }"
+    ></div>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -50,7 +61,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
@@ -112,7 +123,7 @@
   }
 
   .mask {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
@@ -120,7 +131,7 @@
     z-index: -1;
     opacity: 0;
     background: rgba(#000, 0.1);
-    transition: all .3s;
+    transition: all 0.3s;
     &.visible {
       z-index: 1;
       opacity: 1;
@@ -168,7 +179,7 @@
       contentInlineStyles: {
         type: Object,
         default: () => ({
-          textAlign: 'center'
+          textAlign: "center"
         })
       },
       /** modal容器自定义样式 */
@@ -185,6 +196,11 @@
       onClose: {
         type: Function,
         default: () => {}
+      },
+      /** 设置 [modal, mask] 的 zIndex */
+      zIndexOverride: {
+        type: Array,
+        default: () => [2, 1]
       }
     },
     data() {
@@ -192,8 +208,37 @@
         /** 是否展示的内部状态 */
         stateVisible: this.$props.visible,
         stateOnNo: this.$props.onNo,
-        stateOnOk: this.$props.onOk,
+        stateOnOk: this.$props.onOk
       };
+    },
+    watch: {
+      visible: {
+        handler(newState) {
+          this.stateVisible = newState;
+        },
+        immediate: true
+      },
+      stateVisible: {
+        handler(newState) {
+          if (newState) {
+            this.originStyles = document.body.getAttribute("style") || "";
+            this.scrollTop = this.getScrollTop();
+            document.body.style.position = "fixed";
+            document.body.style.width = "100%";
+            document.body.style.top = -this.scrollTop + "px";
+            document.body.style.bottom = "0px";
+            this.$refs.wrapper.style.zIndex = this.zIndexOverride[0];
+            this.$refs.mask.style.zIndex = this.zIndexOverride[1];
+          } else {
+            document.body.setAttribute("style", this.originStyles);
+            document.body.scrollTop = document.documentElement.scrollTop =
+              this.scrollTop || 0;
+            this.$refs.wrapper.style.zIndex = -1;
+            this.$refs.mask.style.zIndex = -1;
+          }
+        },
+        immediate: false
+      }
     },
     methods: {
       /**
@@ -227,6 +272,9 @@
            */
           this.$emit("close");
         }, 300);
+      },
+      getScrollTop() {
+        return document.body.scrollTop || document.documentElement.scrollTop;
       }
     },
     computed: {},
