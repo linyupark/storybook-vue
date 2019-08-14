@@ -2,6 +2,7 @@
 
 **changelog**
 
+* @0.0.21-dev 演示地址改为 http://linyupark.github.io/projects/storybook-crh-vue/
 * @0.0.20-dev list/nav 列表滚动定位导航
 * @0.0.19-dev 带弹出的遮罩zIndex可设置并避免滑动穿透
 * @0.0.18-dev input/tag 标签管理（仿微信）
@@ -18,7 +19,7 @@
 
 - `functions` 各类工具函数
 - `sass` 常用全局样式
-- 其他 UI 组件，在线演示地址：http://nbang.dynv6.net:13530
+- 其他 UI 组件，在线演示地址：http://linyupark.github.io/projects/storybook-crh-vue/
 
 **使用注意点**
 
