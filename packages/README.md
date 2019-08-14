@@ -2,6 +2,7 @@
 
 **changelog**
 
+* @0.0.20-dev list/nav 列表滚动定位导航
 * @0.0.19-dev 带弹出的遮罩zIndex可设置并避免滑动穿透
 * @0.0.18-dev input/tag 标签管理（仿微信）
 * @0.0.16-dev input/base/search || index 基础输入框 || 搜索框
