@@ -2,6 +2,7 @@
 
 **changelog**
 
+* @0.0.18-dev input/tag 标签管理（仿微信）
 * @0.0.16-dev input/base/search || index 基础输入框 || 搜索框
 * @0.0.11-dev filter/tags 支持多个分组
 * @0.0.10-dev list/refresh, list/loadByScroll 增加下拉刷新跟上拉加载
