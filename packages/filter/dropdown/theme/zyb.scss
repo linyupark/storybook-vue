@@ -34,15 +34,16 @@ $borderColor: #f5f5f5;
   }
 }
 .options-slot {
-  position: absolute;
+  position: fixed;
   background: #fff;
   // border-top: $hairline solid $borderColor;
   width: 100vw;
   z-index: 2;
 }
 .mask {
-  position: absolute;
+  position: fixed;
   width: 100vw;
+  top: 0;
   bottom: 0;
   background: rgba(#000, 0.1);
 }

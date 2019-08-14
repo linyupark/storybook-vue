@@ -97,7 +97,7 @@ storiesOf('元素|Filter', module).add(
       }
     },
     template: `
-      <div>
+      <div style="height: 200vh">
         <h4>这里是头部</h4>
         <!-- 列表过滤 -->
         <FilterDropdown

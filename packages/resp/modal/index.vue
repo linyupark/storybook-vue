@@ -221,12 +221,13 @@
       stateVisible: {
         handler(newState) {
           if (newState) {
-            this.originStyles = document.body.getAttribute("style") || "";
+            if (this.originStyles === undefined) {
+              this.originStyles = document.body.getAttribute("style") || "";
+            }
             this.scrollTop = this.getScrollTop();
             document.body.style.position = "fixed";
             document.body.style.width = "100%";
             document.body.style.top = -this.scrollTop + "px";
-            document.body.style.bottom = "0px";
             this.$refs.wrapper.style.zIndex = this.zIndexOverride[0];
             this.$refs.mask.style.zIndex = this.zIndexOverride[1];
           } else {

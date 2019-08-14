@@ -50,6 +50,7 @@
     <!-- 遮罩 -->
     <div
       class="mask"
+      ref="mask"
       v-show="expandTab"
       :style="{...maskStyles(), ...maskInlineStyles}"
       @click="onUnexpand"
@@ -88,12 +89,37 @@
       maskInlineStyles: {
         type: Object,
         default: () => ({})
+      },
+      /** 设置 [options-slot, mask] 的 zIndex */
+      zIndexOverride: {
+        type: Array,
+        default: () => [2, 1]
       }
     },
     data() {
       return {
         stateExpandIndex: this.$props.tabExpandIndex
       };
+    },
+    watch: {
+      stateExpandIndex: {
+        handler(newState) {
+          if (newState != -1) {
+            window.scrollTo(0, 0);
+            if (this.originStyles === undefined) {
+              this.originStyles = document.body.getAttribute("style") || "";
+            }
+            document.body.style.position = "fixed";
+            document.body.style.width = "100%";
+            this.optionsInlineStyles.zIndex = this.zIndexOverride[0];
+            this.$refs.mask.style.zIndex = this.zIndexOverride[1];
+          } else {
+            document.body.setAttribute("style", this.originStyles);
+            this.$refs.mask.style.zIndex = -1;
+          }
+        },
+        immediate: false
+      }
     },
     methods: {
       /**
@@ -128,6 +154,9 @@
          * @type {Event}
          */
         this.$emit('unexpand');
+      },
+      getScrollTop() {
+        return document.body.scrollTop || document.documentElement.scrollTop;
       }
     },
     computed: {
