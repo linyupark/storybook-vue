@@ -2,6 +2,7 @@
 
 **changelog**
 
+* @0.0.22-dev 新增 upload/snapshot 截图上传组件
 * @0.0.21-dev 演示地址改为 http://linyupark.github.io/projects/storybook-crh-vue/
 * @0.0.20-dev list/nav 列表滚动定位导航
 * @0.0.19-dev 带弹出的遮罩zIndex可设置并避免滑动穿透
