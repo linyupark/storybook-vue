@@ -2,6 +2,7 @@
 
 **changelog**
 
+* @0.0.23-dev 新增 input/LimitText 限制字数文本框
 * @0.0.22-dev 新增 upload/snapshot 截图上传组件
 * @0.0.21-dev 演示地址改为 http://linyupark.github.io/projects/storybook-crh-vue/
 * @0.0.20-dev list/nav 列表滚动定位导航
