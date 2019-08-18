@@ -1,4 +1,5 @@
 <style lang="scss" scoped>
+.tab-slide {
   .container {
     position: relative;
     display: flex;
@@ -7,6 +8,9 @@
     width: 100vw;
     height: px2vw(88);
     background: #ffffff;
+    .clamp {
+      @include limitTextHeight(1);
+    }
     .slide {
       width: px2vw(40);
       height: px2vw(4);
@@ -17,25 +21,28 @@
       top: px2vw(88);
     }
   }
+}
 </style>
 
 
 <template>
-  <!-- tab滑动结果过滤 -->
-  <div
-    class="container"
-    :style="{...containerInlineStyles}"
-  >
-    <slot />
+  <div class="tab-slide">
+    <!-- tab滑动结果过滤 -->
     <div
-      class="slide"
-      ref="slide"
-      :style="{
-      visibility: slideLeft === '-1px' ? 'hidden' : 'visible',
-      left: slideLeft,
-      ...slideInlineStyles
-    }"
-    ></div>
+      class="container"
+      :style="{...containerInlineStyles}"
+    >
+      <slot />
+      <div
+        class="slide"
+        ref="slide"
+        :style="{
+        visibility: slideLeft === '-1px' ? 'hidden' : 'visible',
+        left: slideLeft,
+        ...slideInlineStyles
+      }"
+      ></div>
+    </div>
   </div>
 </template>
 
@@ -63,6 +70,12 @@
     watch: {
       stateIndex(newIndex) {
         this.setSlideLeft();
+      },
+      index: {
+        handler(newIndex) {
+          this.stateIndex = newIndex;
+        },
+        immediate: true
       }
     },
     data() {
@@ -81,6 +94,7 @@
           throw new Error("请在标签内放置tab选项卡内容.");
         }
         tabItems.forEach((VNode, i) => {
+          // console.log('tab 绑定', VNode.elm);
           VNode.elm.addEventListener("click", () => {
             this.stateIndex = i;
             /**
@@ -96,6 +110,7 @@
         const slide = this.$refs.slide;
         const slideWidth = slide.clientWidth;
         const tabWidth = this.$el.clientWidth;
+        // console.log('tabWidth', tabWidth);
         const tabItemNum = this.getTabItems().length;
         // console.log("数量", tabItemNum);
         const itemWidth = tabWidth / tabItemNum;

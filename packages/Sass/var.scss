@@ -2,3 +2,10 @@
 
 $hairline: 1Px !default;
 $hairline2: 2Px !default;
+
+@mixin limitTextHeight($line: 1) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+  overflow: hidden;
+}

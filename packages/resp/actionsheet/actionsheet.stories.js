@@ -123,20 +123,51 @@ storiesOf('反馈|Actionseet', module).add(
   () => ({
     components: {
       ActionsheetRegions,
+      ButtonBase
     },
     props: {
+      /** 选择层级对应显示几列 provinces：省，cities：市，areas：区 */
+      levels: {
+        type: Array,
+        default: () => array('levels: 选择层级', ["provinces", "cities", "areas"])
+      },
+      /** 默认选中数据 需要参考 stories里的对应js code */
+      selected: {
+        type: Array,
+        default: () => array('selected: 默认选中数据', ["33", "3301"])
+      }
     },
     methods: {
+      onOpen(close) {
+        this.$refs.actionsheet.show();
+        close();
+      },
+      onSelect(data) {
+        this.selectData = data.map(item => item.name).join(',');
+        this.$refs.actionsheet.close();
+      }
     },
     data() {
       return {
+        selectData: ''
       }
+    },
+    computed: {
     },
     mounted() {
     },
     template: `
-      <div style="height: 150vh">
-        <ActionsheetRegions />
+      <div>
+        <ActionsheetRegions 
+          ref="actionsheet" 
+          :levels="levels"
+          :selected="selected"
+          @select="onSelect"
+        />
+        <br /><br />
+        <center v-show="selectData !== ''">选择变为: {{selectData}}</center> 
+        <br /><br />
+        <ButtonBase @click="onOpen">打开</ButtonBase>
       </div>
     `
   }),
