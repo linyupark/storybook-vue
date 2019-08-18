@@ -280,7 +280,7 @@
     },
     computed: {},
     mounted() {
-      console.log("modal mounted");
+      // console.log("modal mounted");
     }
   };
 

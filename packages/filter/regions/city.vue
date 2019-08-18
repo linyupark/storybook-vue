@@ -93,7 +93,7 @@
 </style>
 
 <script>
-  import RegionsData from "./data";
+  import RegionsData from "@crh/vue/stores/regions";
   export default {
     name: "FilterRegionsCity",
     components: {},
