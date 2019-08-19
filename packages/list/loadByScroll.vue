@@ -2,15 +2,32 @@
   <!-- 列表滑动到底部进行加载操作 -->
   <div class="load-by-scroll">
     <!-- 加载中时候显示 -->
-    <div v-show="!noMore && stateLoading.value">
+    <div class="loading-wrapper" v-show="!noMore && stateLoading.value">
       <slot name="loading" />
     </div>
     <!-- 没有更多数据的时候显示 -->
-    <div v-show="noMore">
+    <div class="noMore-wrapper" v-show="noMore">
       <slot name="noMore" />
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.load-by-scroll {
+  .loading-wrapper, .noMore-wrapper {
+    min-height: px2vw(100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: px2vw(28);
+    color: #8c8c8c;
+    i {
+      font-size: px2vw(32);
+      vertical-align: top;
+    }
+  }
+}
+</style>
 
 <script>
   import useBoolean from "@crh/vue/functions/useBoolean";
