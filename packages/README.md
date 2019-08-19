@@ -1,7 +1,7 @@
 ### 适用于 Vue 的综合库（未编译）
 
 **changelog**
-
+* @0.0.25-dev 修复一些弹出层mask会影响其他布局的问题
 * @0.0.24-dev 新增 resp/actionsheet/list,base,regions 上滑抽屉、地区选择
 * @0.0.23-dev 新增 input/LimitText 限制字数文本框
 * @0.0.22-dev 新增 upload/snapshot 截图上传组件
