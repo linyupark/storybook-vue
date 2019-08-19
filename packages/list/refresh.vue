@@ -219,7 +219,7 @@
     },
     beforeDestroy() {
       if (this.$containerEl) {
-        this.$containerEl.removeListener("scroll", this.scrollHandler, false);
+        this.$containerEl.removeEventListener("scroll", this.scrollHandler, false);
         this.unbindTouch();
       }
     }
