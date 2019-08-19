@@ -1,27 +1,26 @@
 <style lang="scss" scoped>
   .refresh {
-    display: flex;
-    justify-content: center;
-  }
-  .rotate-mark {
-    width: px2vw(60);
-    height: px2vw(60);
-    border-radius: 50%;
-    border: $hairline solid #ccc;
-    position: fixed;
-    z-index: 999;
-    background: #fff;
-    top: 0;
-    opacity: 0;
-    font-size: px2vw(36);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #999;
-    font-weight: bold;
-    box-shadow: 0 0 5px #ccc;
-    &.loading {
-      animation: rotate 1s linear infinite;
+    text-align: center;
+    .rotate-mark {
+      width: px2vw(60);
+      height: px2vw(60);
+      border-radius: 50%;
+      border: $hairline solid #ccc;
+      position: absolute;
+      z-index: 9999;
+      background: #fff;
+      opacity: 0;
+      left: px2vw(375 - 30);
+      font-size: px2vw(36);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #999;
+      font-weight: bold;
+      box-shadow: 0 0 5px #ccc;
+      &.loading {
+        animation: rotate 1s linear infinite;
+      }
     }
   }
   @keyframes rotate {
@@ -40,14 +39,6 @@
   <div class="refresh">
     <!-- svg 图标 -->
     <svg style="display: none"><symbol id="icon-shuaxin" viewBox="0 0 1024 1024"><path d="M972.8 102.4c-30.72 0-51.2 20.48-51.2 51.2v51.2c-51.2-71.68-122.88-128-204.8-158.72C460.8-66.56 158.72 51.2 46.08 307.2S51.2 865.28 307.2 977.92s558.08-5.12 670.72-261.12h-5.12c0-30.72-20.48-51.2-51.2-51.2s-51.2 20.48-51.2 51.2h-5.12C819.2 793.6 752.64 855.04 665.6 890.88c-209.92 87.04-445.44-15.36-532.48-225.28s15.36-450.56 225.28-532.48c189.44-81.92 404.48 0 506.88 174.08H768c-30.72 0-51.2 20.48-51.2 51.2s20.48 51.2 51.2 51.2h204.8c30.72 0 51.2-20.48 51.2-51.2V153.6c0-30.72-20.48-51.2-51.2-51.2z"  ></path></symbol></svg>
-    <!-- <svg style="display: none">
-      <symbol
-        id="icon-shuaxin"
-        viewBox="0 0 1024 1024"
-      >
-        <path d="M826.88 262.656a32 32 0 1 1-45.504 43.904c-2.592-2.4-5.568-5.632-9.28-9.568a334.4 334.4 0 0 0-157.12-93.536c-179.264-48.032-363.52 58.336-411.52 237.568-48.032 179.264 58.336 363.52 237.568 411.52 169.28 45.376 344.64-47.104 403.232-211.04 1.248-3.424 2.4-6.88 3.52-10.368a5.312 5.312 0 0 1 0.896-1.6 32 32 0 1 1 59.36 23.328c-1.12 3.424-2.304 6.816-3.52 10.176-69.376 194.144-277.376 305.632-480.032 251.328-213.408-57.184-340.032-276.48-282.88-489.92 57.216-213.376 276.544-340 489.92-282.816a398.144 398.144 0 0 1 193.12 117.984c0.96 1.056 1.696 2.08 2.24 3.04z"></path>
-      </symbol>
-    </svg> -->
     <!-- 刷新标识圈 -->
     <div
       class="rotate-mark"
@@ -55,7 +46,7 @@
         loading: stateLoading.value
       }"
       :style="{
-        top: `${markY}px`,
+        top: `${markY + markYOffset}px`,
         opacity: `${markY / distance}`,
         transition: useTransition.value ? 'all .3s' : 'none',
         transform: `rotate(${markY / distance * 360}deg)`,
@@ -100,6 +91,11 @@
       inlineStyles: {
         type: Object,
         default: () => ({})
+      },
+      /** 标志垂直偏移 */
+      markYOffset: {
+        type: Number,
+        default: 0
       }
     },
     data() {
@@ -159,8 +155,8 @@
       },
       scrollHandler() {
         if (this.$delayTimer) clearTimeout(this.$delayTimer);
+        this.refreshReady.set(false);
         if (this.disabled) {
-          this.refreshReady.set(false);
           return;
         }
         // 避免实时处理优化处理速度
@@ -220,8 +216,12 @@
           this.$emit('refresh', this.markReset);
         }
       });
+    },
+    beforeDestroy() {
+      if (this.$containerEl) {
+        this.$containerEl.removeListener("scroll", this.scrollHandler, false);
+        this.unbindTouch();
+      }
     }
-    // name: '', watch: {}, mixins: [], filters: {}, directives: {},
-    // beforeCreate() {}, created() {}, beforeMount() {}, beforeUpdate() {}, updated() {}, activated() {}, deactivated() {}, beforeDestroy() {}, destroyed() {},
   };
 </script>
