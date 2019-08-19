@@ -230,12 +230,14 @@
             document.body.style.top = -this.scrollTop + "px";
             this.$refs.wrapper.style.zIndex = this.zIndexOverride[0];
             this.$refs.mask.style.zIndex = this.zIndexOverride[1];
+            this.$refs.mask.style.display = 'block';
           } else {
             document.body.setAttribute("style", this.originStyles);
             document.body.scrollTop = document.documentElement.scrollTop =
               this.scrollTop || 0;
             this.$refs.wrapper.style.zIndex = -1;
             this.$refs.mask.style.zIndex = -1;
+            this.$refs.mask.style.display = 'none';
           }
         },
         immediate: false

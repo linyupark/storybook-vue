@@ -113,9 +113,11 @@
             document.body.style.width = "100%";
             this.optionsInlineStyles.zIndex = this.zIndexOverride[0];
             this.$refs.mask.style.zIndex = this.zIndexOverride[1];
+            this.$refs.mask.style.display = 'block';
           } else {
             document.body.setAttribute("style", this.originStyles);
             this.$refs.mask.style.zIndex = -1;
+            this.$refs.mask.style.display = 'none';
           }
         },
         immediate: false
