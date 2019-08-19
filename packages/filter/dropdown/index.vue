@@ -116,7 +116,6 @@
             this.$refs.mask.style.display = 'block';
           } else {
             document.body.setAttribute("style", this.originStyles);
-            this.$refs.mask.style.zIndex = -1;
             this.$refs.mask.style.display = 'none';
           }
         },

@@ -78,8 +78,6 @@
             document.body.setAttribute("style", this.originStyles);
             document.body.scrollTop = document.documentElement.scrollTop =
               this.scrollTop || 0;
-            this.$refs.container.style.zIndex = -1;
-            this.$refs.mask.style.zIndex = -1;
             this.$refs.mask.style.display = 'none';
           }
         },

@@ -128,13 +128,12 @@
     left: 0;
     height: 100vh;
     width: 100vw;
-    z-index: -1;
-    opacity: 0;
     background: rgba(#000, 0.1);
     transition: all 0.3s;
+    display: none;
     &.visible {
       z-index: 1;
-      opacity: 1;
+      display: block;
     }
   }
 </style>
@@ -235,8 +234,6 @@
             document.body.setAttribute("style", this.originStyles);
             document.body.scrollTop = document.documentElement.scrollTop =
               this.scrollTop || 0;
-            this.$refs.wrapper.style.zIndex = -1;
-            this.$refs.mask.style.zIndex = -1;
             this.$refs.mask.style.display = 'none';
           }
         },
