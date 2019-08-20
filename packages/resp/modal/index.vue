@@ -82,7 +82,7 @@
       border-radius: px2vw(20);
       overflow: hidden;
       opacity: 0;
-      transition: all 0.3s;
+      transition: opacity,transform 0.3s;
 
       .title {
         text-align: center;
@@ -234,6 +234,7 @@
             document.body.setAttribute("style", this.originStyles);
             document.body.scrollTop = document.documentElement.scrollTop =
               this.scrollTop || 0;
+            this.$refs.wrapper.style.zIndex = -1;
             this.$refs.mask.style.display = 'none';
           }
         },

@@ -156,13 +156,6 @@
           if (!checkedOption) {
             this.$refs.options.scrollTop = 0;
           }
-          if (newSelect.length === this.levels.length) {
-            /**
-             * 区域选择结果
-             * @type {Event}
-             */
-            this.$emit('select', this.labels);
-          }
         });
       }
     },
@@ -180,6 +173,15 @@
           newSelectState[this.levels.length - 1] = option.code;
         }
         this.stateSelected = newSelectState;
+        if (newSelectState.length === this.levels.length) {
+          this.$nextTick(() => {
+            /**
+             * 区域选择结果
+             * @type {Event}
+             */
+            this.$emit('select', this.labels);
+          });
+        }
       },
       /** 按需获取联动数据 */
       fetchData() {
