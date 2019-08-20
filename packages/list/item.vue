@@ -25,7 +25,7 @@
       justify-content: space-between;
       height: px2vw(88);
       padding: 0 $sideSpace;
-      border-bottom: 1px solid $borderColor;
+      border-bottom: $hairline solid $borderColor;
       cursor: pointer;
 
       &.left {

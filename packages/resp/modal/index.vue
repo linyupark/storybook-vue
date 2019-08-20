@@ -102,7 +102,7 @@
         display: flex;
         width: 100%;
         height: px2vw(90);
-        border-top: 1px solid #f5f5f5;
+        border-top: $hairline solid #f5f5f5;
 
         .ok,
         .no {
@@ -116,7 +116,7 @@
         }
 
         button:not(:first-child) {
-          border-left: 1px solid #f5f5f5;
+          border-left: $hairline solid #f5f5f5;
         }
       }
     }
