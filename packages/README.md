@@ -2,6 +2,7 @@
 
 **changelog**
 
+* @0.0.28-dev 修复modal 关闭后遮罩问题跟actionsheet 地区选择器变更默认值出现的问题
 * @0.0.27-dev 修复部分组件1像素问题
 * @0.0.26-dev 修复一些弹出层mask会影响其他布局的问题
 * @0.0.24-dev 新增 resp/actionsheet/list,base,regions 上滑抽屉、地区选择
