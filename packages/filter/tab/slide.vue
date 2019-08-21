@@ -18,7 +18,7 @@
       position: absolute;
       transition: left 0.2s ease;
       border-radius: $hairline2;
-      top: px2vw(88);
+      top: px2vw(84);
     }
   }
 }
