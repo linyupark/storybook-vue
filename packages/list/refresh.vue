@@ -38,7 +38,14 @@
   <!-- 下拉刷新 -->
   <div class="refresh">
     <!-- svg 图标 -->
-    <svg style="display: none"><symbol id="icon-shuaxin" viewBox="0 0 1024 1024"><path d="M972.8 102.4c-30.72 0-51.2 20.48-51.2 51.2v51.2c-51.2-71.68-122.88-128-204.8-158.72C460.8-66.56 158.72 51.2 46.08 307.2S51.2 865.28 307.2 977.92s558.08-5.12 670.72-261.12h-5.12c0-30.72-20.48-51.2-51.2-51.2s-51.2 20.48-51.2 51.2h-5.12C819.2 793.6 752.64 855.04 665.6 890.88c-209.92 87.04-445.44-15.36-532.48-225.28s15.36-450.56 225.28-532.48c189.44-81.92 404.48 0 506.88 174.08H768c-30.72 0-51.2 20.48-51.2 51.2s20.48 51.2 51.2 51.2h204.8c30.72 0 51.2-20.48 51.2-51.2V153.6c0-30.72-20.48-51.2-51.2-51.2z"  ></path></symbol></svg>
+    <svg style="display: none">
+      <symbol
+        id="icon-shuaxin"
+        viewBox="0 0 1024 1024"
+      >
+        <path d="M972.8 102.4c-30.72 0-51.2 20.48-51.2 51.2v51.2c-51.2-71.68-122.88-128-204.8-158.72C460.8-66.56 158.72 51.2 46.08 307.2S51.2 865.28 307.2 977.92s558.08-5.12 670.72-261.12h-5.12c0-30.72-20.48-51.2-51.2-51.2s-51.2 20.48-51.2 51.2h-5.12C819.2 793.6 752.64 855.04 665.6 890.88c-209.92 87.04-445.44-15.36-532.48-225.28s15.36-450.56 225.28-532.48c189.44-81.92 404.48 0 506.88 174.08H768c-30.72 0-51.2 20.48-51.2 51.2s20.48 51.2 51.2 51.2h204.8c30.72 0 51.2-20.48 51.2-51.2V153.6c0-30.72-20.48-51.2-51.2-51.2z"></path>
+      </symbol>
+    </svg>
     <!-- 刷新标识圈 -->
     <div
       class="rotate-mark"
@@ -53,7 +60,10 @@
         ...inlineStyles
       }"
     >
-      <IconSvg icon="icon-shuaxin" color="#3e86f7" />
+      <IconSvg
+        icon="icon-shuaxin"
+        color="#3e86f7"
+      />
     </div>
   </div>
 </template>
@@ -85,7 +95,7 @@
       /** 进入后立马执行一次刷新 */
       refreshOnLoad: {
         type: Boolean,
-        default: false,
+        default: false
       },
       /** 标志样式微调 */
       inlineStyles: {
@@ -104,7 +114,7 @@
         markY: 0,
         refreshReady: useBoolean(true),
         useTransition: useBoolean(false),
-        stateLoading: useBoolean(this.$props.refreshOnLoad),
+        stateLoading: useBoolean(this.$props.refreshOnLoad)
       };
     },
     watch: {
@@ -163,9 +173,12 @@
         this.$delayTimer = setTimeout(() => {
           const containerRect = this.$containerEl.getBoundingClientRect();
           const elRect = this.$el.getBoundingClientRect();
+
           this.refreshReady.set(
-            (containerRect.y || containerRect.top).toFixed(0) ==
-              (elRect.y || elRect.top).toFixed(0)
+            Math.abs(
+              (containerRect.y || containerRect.top).toFixed(0) -
+                (elRect.y || elRect.top).toFixed(0)
+            ) < 5
           );
         }, 100);
       },
@@ -184,7 +197,7 @@
         if (this.markY == this.distance) {
           // 刷新
           this.stateLoading.set(true);
-          this.$emit('refresh', this.markReset);
+          this.$emit("refresh", this.markReset);
         } else {
           this.markReset();
         }
@@ -213,13 +226,17 @@
         // 进入就执行一次刷新
         if (this.stateLoading.value) {
           this.markY = this.distance;
-          this.$emit('refresh', this.markReset);
+          this.$emit("refresh", this.markReset);
         }
       });
     },
     beforeDestroy() {
       if (this.$containerEl) {
-        this.$containerEl.removeEventListener("scroll", this.scrollHandler, false);
+        this.$containerEl.removeEventListener(
+          "scroll",
+          this.scrollHandler,
+          false
+        );
         this.unbindTouch();
       }
     }
