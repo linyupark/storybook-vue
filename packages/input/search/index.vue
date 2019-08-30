@@ -129,9 +129,11 @@
     methods: {
       onFocus() {
         this.stateFocus = true;
+        this.$emit('focus');
       },
       onBlur() {
         this.stateFocus = false;
+        this.$emit('blur');
       },
       onInput(newValue) {
         if (~newValue.search("'")) return;
