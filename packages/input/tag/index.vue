@@ -71,12 +71,16 @@
       font-size: px2vw(26);
       color: #fff;
       height: px2vw(58);
-      display: flex;
-      align-items: center;
+      line-height: px2vw(58);
+      max-width: 80vw;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
       background: #3985fc;
-      padding: 0 px2vw(20);
       border-radius: px2vw(29);
       margin: px2vw(5) px2vw(18) px2vw(5) 0;
+      padding: 0 px2vw(20);
     }
 
     .input {

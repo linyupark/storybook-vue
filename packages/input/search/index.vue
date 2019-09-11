@@ -49,6 +49,7 @@
     .placeholder {
       position: absolute;
       width: 100vw;
+      // height: px2vw(88);
       text-align: center;
       top: 0;
       bottom: 0;
